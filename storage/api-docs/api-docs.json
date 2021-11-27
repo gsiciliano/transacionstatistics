@@ -1,0 +1,74 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Transaction statistics",
+        "description": "REST Api",
+        "contact": {
+            "name": "Gianluca Siciliano",
+            "email": "gianluca.siciliano.79@gmail.com"
+        },
+        "version": "1.0.1"
+    },
+    "paths": {
+        "/statistics": {
+            "get": {
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "",
+                "description": "returns the statistic based of the transactions of the last 60 seconds.",
+                "operationId": "82f865d2c1bf5c0495acee18a9d5e855",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "description": "returns all the transaction from a specified timestamp",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "in": "header",
+                "flows": {
+                    "clientCredentials": {
+                        "tokenUrl": "https://localhost/oauth/token",
+                        "scopes": {}
+                    }
+                },
+                "scheme": [
+                    "https"
+                ]
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

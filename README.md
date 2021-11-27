@@ -19,7 +19,9 @@ First of all you must clone this repo: `git clone <repourl> `
 Then use following instructions to initialize the environment:
 
 1 `first command`
+
 2 `second command`
+
 3 `third command`
 
 ## Run application
@@ -28,4 +30,4 @@ use `docker-compose up -d` to start application's containers
 
 ## Test application
 
-navigate to <https://localhost/documentation> for swagger docs
+navigate to <https://localhost> for swagger docs

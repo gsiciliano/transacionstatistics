@@ -31,6 +31,7 @@ build:                                  ## Build container images
 	$(COMPOSE_COMMAND) --file docker-compose.$(APP_ENV).yml build
 rebuild:                                ## Rebuild and turn on container services
 	$(COMPOSE_COMMAND) --file docker-compose.$(APP_ENV).yml up -d --build
-
+shell:                                  ## Enter application container shell
+	docker exec -it transaction_statistics_app bash
 
 .DEFAULT_GOAL := help

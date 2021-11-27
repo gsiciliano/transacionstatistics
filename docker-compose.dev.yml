@@ -43,6 +43,24 @@ services:
     networks:
       - default
 
+  redis:
+    image: "redis:3.2"
+    command: "redis-server --appendonly yes"
+    container_name: ${APP_NAME}_redis
+    volumes:
+      - "redis_data:/data"
+    networks:
+      - default
+
+  scheduler:
+    image: mcuadros/ofelia:latest
+    container_name: ${APP_NAME}_scheduler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./scheduler/config.ini:/etc/ofelia/config.ini
+    depends_on:
+      - app
+
 volumes:
   mysql-data:
 networks:
