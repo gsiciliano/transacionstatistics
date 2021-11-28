@@ -112,6 +112,29 @@
                         "passport": []
                     }
                 ]
+            },
+            "delete": {
+                "tags": [
+                    "Transactions"
+                ],
+                "description": "This endpoint causes all existing transactions to be deleted",
+                "operationId": "destroy",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
             }
         }
     },

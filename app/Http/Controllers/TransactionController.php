@@ -128,12 +128,31 @@ class TransactionController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *     path="/transactions",
+     *     description="This endpoint causes all existing transactions to be deleted",
+     *     operationId="destroy",
+     *     tags={"Transactions"},
+     *     security={{"passport":{}}},
+    *     @OA\Response(
+     *         response=200,
+     *         description="Operation successful",
+     *         @OA\MediaType(
+     *            mediaType="application/json",
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),     * )
+     */
+    /**
      * Remove the specified resource from storage.
      *
      * @return \Illuminate\Http\Response
      */
     public function destroy()
     {
-        //
+        return response()->json(["deleted"=>$this->transactionRepository->truncate()],Response::HTTP_OK);
     }
 }

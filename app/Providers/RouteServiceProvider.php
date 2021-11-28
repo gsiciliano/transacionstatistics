@@ -38,8 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('passport')
-                ->namespace($this->namespace)
+            Route::namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
         });
