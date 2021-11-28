@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
     use HasFactory;
 
     protected $fillable = ['amount','timestamp'];
+
+    public function setTimestampAttribute($value){
+        $this->attributes['timestamp'] = Carbon::parse($value)->toDateTimeString();
+    }
 }

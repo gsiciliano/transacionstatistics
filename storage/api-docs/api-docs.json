@@ -35,12 +35,76 @@
                 ],
                 "description": "returns all the transaction from a specified timestamp",
                 "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "the given timestamp in the ISO 8601 format",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2021-11-27T18:13:25Z"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Operation successful",
                         "content": {
                             "application/json": {}
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "description": "This endpoint is called to create a new transaction.",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Amount",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/transactionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resource created",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "204": {
+                        "description": "Resource created but is older than 60 seconds",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
                     }
                 },
                 "security": [
@@ -52,6 +116,23 @@
         }
     },
     "components": {
+        "schemas": {
+            "transactionRequest": {
+                "properties": {
+                    "amount": {
+                        "type": "string",
+                        "format": "numeric",
+                        "example": "1000"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-11-27T18:13:25Z"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "passport": {
                 "type": "oauth2",

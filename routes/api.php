@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('statistics', [\App\Http\Controllers\StatisticController::class,'index'])
                 ->name('statistics.index');
 
-Route::middleware('passport')
-                ->resource('transactions', \App\Http\Controllers\TransactionController::class,
-                                ['only' => ['index','store','destroy']]
-                );
+Route::middleware('passport')->resource('transactions', \App\Http\Controllers\TransactionController::class,
+                ['only' => ['index','store','destroy']]
+);

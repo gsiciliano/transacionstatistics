@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory
@@ -15,7 +16,7 @@ class TransactionFactory extends Factory
     {
         return [
             'amount' => $this->faker->randomFloat(),
-            'timestamp' => now()
+            'timestamp' => Carbon::now()->toIso8601ZuluString()
         ];
     }
 }

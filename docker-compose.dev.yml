@@ -63,6 +63,7 @@ services:
 
 volumes:
   mysql-data:
+  redis_data:
 networks:
   default:
     driver: bridge

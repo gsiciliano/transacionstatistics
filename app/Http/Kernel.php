@@ -47,7 +47,7 @@ class Kernel extends HttpKernel
         'passport' => [
             \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
             'throttle:60,1',
-            'bindings',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]
     ];
 
