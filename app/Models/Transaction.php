@@ -12,7 +12,4 @@ class Transaction extends Model
 
     protected $fillable = ['amount','timestamp'];
 
-    public function setTimestampAttribute($value){
-        $this->attributes['timestamp'] = Carbon::parse($value)->toDateTimeString();
-    }
 }

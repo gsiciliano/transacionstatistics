@@ -30,7 +30,7 @@ class TransactionRequest extends FormRequest
     *             property="timestamp",
     *              type="string",
     *              format="date-time",
-    *              example="2021-11-27T18:13:25Z"
+    *              example="2021-11-27T18:13:25.354Z"
     *         ),
     *     )
     */

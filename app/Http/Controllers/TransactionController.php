@@ -33,7 +33,7 @@ class TransactionController extends Controller
      *          @OA\Schema(
      *              type="string",
      *              format="date-time",
-     *              example="2021-11-27T18:13:25Z"
+     *              example="2021-11-27T18:13:25.354Z"
      *          )
      *     ),
      *     @OA\Response(

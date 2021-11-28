@@ -19,7 +19,7 @@ class TransactionResource extends JsonResource
     {
         return [
             "amount" => $this->amount,
-            "timestamp" => Carbon::createFromTimeString($this->timestamp)->toIso8601ZuluString()
+            "timestamp" => Carbon::createFromTimeString($this->timestamp)->format('Y-m-d\TH:i:s.v\Z')
         ];
     }
 }

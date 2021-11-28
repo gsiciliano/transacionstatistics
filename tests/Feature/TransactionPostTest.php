@@ -5,14 +5,9 @@ namespace Tests\Feature;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Http\Response;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TransactionPostTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
-
     public function post_response_code_401()
     /**
      * @test
@@ -21,7 +16,7 @@ class TransactionPostTest extends TestCase
     {
         $payload = [
             'amount'=> '10000',
-            'timestamp' => Carbon::now()->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->toIso8601String()
         ];
         $response = $this->postJson('/transactions',$payload);
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -35,7 +30,7 @@ class TransactionPostTest extends TestCase
     {
         $payload = [
             'amount'=> '10000',
-            'timestamp' => Carbon::now()->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->toIso8601String()
         ];
         $response = $this->withoutMiddleware()->post('/transactions',$payload);
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
@@ -49,7 +44,7 @@ class TransactionPostTest extends TestCase
     {
         $payload = [
             'amount'=> '10000',
-            'timestamp' => Carbon::now()->addDays(2)->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->addDays(2)->toIso8601String()
         ];
         $response = $this->withoutMiddleware()->postJson('/transactions',$payload);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -63,7 +58,7 @@ class TransactionPostTest extends TestCase
     {
         $payload = [
             'amount'=> 'thousand',
-            'timestamp' => Carbon::now()->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->toIso8601String()
         ];
         $response = $this->withoutMiddleware()->postJson('/transactions',$payload);
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -77,7 +72,7 @@ class TransactionPostTest extends TestCase
     {
         $payload = [
             'amount'=> '10000',
-            'timestamp' => Carbon::now()->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->toIso8601String()
         ];
         $response = $this->withoutMiddleware()->postJson('/transactions',$payload);
         $response->assertStatus(Response::HTTP_CREATED);
@@ -91,7 +86,7 @@ class TransactionPostTest extends TestCase
     {
         $payload = [
             'amount'=> '10000',
-            'timestamp' => Carbon::now()->subMinutes(2)->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->subMinutes(2)->toIso8601String()
         ];
         $response = $this->withoutMiddleware()->postJson('/transactions',$payload);
         $response->assertStatus(Response::HTTP_NO_CONTENT);

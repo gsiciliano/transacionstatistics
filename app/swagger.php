@@ -12,6 +12,10 @@
  *     ),
  * )
  *
+ * @OA\Server(
+ *      url=L5_SWAGGER_CONST_HOST,
+ *      description="API Server"
+ * )
  */
 /**
  * @OA\SecurityScheme(
@@ -19,10 +23,10 @@
  *     name="passport",
  *     securityScheme="passport",
  *     in="header",
- *     scheme={"https"},
+ *     scheme={"http","https"},
  *     @OA\Flow(
  *         flow="clientCredentials",
- *         tokenUrl="https://localhost/oauth/token",
+ *         tokenUrl="/oauth/token",
  *         scopes={}
  *     )
  *  )

@@ -5,13 +5,9 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Transaction;
 use Illuminate\Http\Response;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TransactionDeleteTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * @test
      * @return void

@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory
 {
+    protected $model = Transaction::class;
     /**
      * Define the model's default state.
      *
@@ -16,7 +18,7 @@ class TransactionFactory extends Factory
     {
         return [
             'amount' => $this->faker->randomFloat(),
-            'timestamp' => Carbon::now()->toIso8601ZuluString()
+            'timestamp' => Carbon::now()->format('Y-m-d\TH:i:s.v\Z')
         ];
     }
 }
