@@ -8,7 +8,9 @@ A RESTful API for collecting statistics. The main use case for the API is to cal
 
 In order to run this application you must install at least:
 
+-   an internet connection in order to download docker images
 -   [Docker](https://docs.docker.com/engine/install/)
+-   WSL (if you run under Windows)
 
 For a best comfort running commands you can install [make](https://www.gnu.org/software/make/)
 

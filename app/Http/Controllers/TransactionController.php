@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\TransactionRequest;
 use App\Http\Repositories\TransactionRepository;
 
@@ -122,7 +123,14 @@ class TransactionController extends Controller
         }
         $validated = $request->validated();
         $dataTimeStamp = Carbon::parse($validated['timestamp']);
-        $statusCode = $dataTimeStamp->diffInSeconds() > 60 ? Response::HTTP_NO_CONTENT : Response::HTTP_CREATED;
+
+        if ($dataTimeStamp->diffInSeconds() > 60) {
+            $statusCode = Response::HTTP_NO_CONTENT;
+        } else {
+            $statusCode = Response::HTTP_CREATED;
+            Cache::put([$validated['timestamp'] => $validated['amount']], 60);
+        }
+
         $this->transactionRepository->save($validated);
         return response()->json(null, $statusCode);
     }
