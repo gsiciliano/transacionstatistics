@@ -4,7 +4,8 @@ namespace App\Http\Repositories;
 
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
-use App\Resources\TransactionResource;
+use Illuminate\Support\Facades\Redis;
+use App\Http\Resources\TransactionResource;
 
 class TransactionRepository
 {
@@ -19,6 +20,10 @@ class TransactionRepository
 
     public function save($data){
         return Transaction::create($data);
+    }
+
+    public function addToQueue($data){
+        return Redis::hmset(microtime(),$data);
     }
 
     public function truncate(){

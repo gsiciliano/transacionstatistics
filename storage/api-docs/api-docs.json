@@ -21,7 +21,7 @@
                 "tags": [
                     "Statistics"
                 ],
-                "summary": "",
+                "summary": "returns the statistic based of the transactions of the last 60 seconds.",
                 "description": "returns the statistic based of the transactions of the last 60 seconds.",
                 "operationId": "82f865d2c1bf5c0495acee18a9d5e855",
                 "responses": {
@@ -39,6 +39,7 @@
                 "tags": [
                     "Transactions"
                 ],
+                "summary": "returns all the transaction from a specified timestamp",
                 "description": "returns all the transaction from a specified timestamp",
                 "operationId": "index",
                 "parameters": [
@@ -78,6 +79,7 @@
                 "tags": [
                     "Transactions"
                 ],
+                "summary": "This endpoint is called to create a new transaction.",
                 "description": "This endpoint is called to create a new transaction.",
                 "operationId": "store",
                 "requestBody": {
@@ -123,6 +125,7 @@
                 "tags": [
                     "Transactions"
                 ],
+                "summary": "This endpoint causes all existing transactions to be deleted",
                 "description": "This endpoint causes all existing transactions to be deleted",
                 "operationId": "destroy",
                 "responses": {

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('statistics', '\App\Http\Controllers\TransactionController@index')
+Route::get('statistics', '\App\Http\Controllers\StatisticController@index')
                                                             ->name('statistics.index');
 
 Route::middleware('passport')->group(function(){

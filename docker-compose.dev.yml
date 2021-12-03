@@ -17,6 +17,16 @@ services:
     networks:
       - default
 
+  supervisor:
+    build:
+      context: ./
+      dockerfile: docker/supervisor.dockerfile
+    container_name: ${APP_NAME}_supervisor
+    environment:
+      - TZ=Europe/Rome
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   web:
     build:
       context: ./

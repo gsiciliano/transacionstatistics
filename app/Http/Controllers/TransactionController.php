@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\TransactionRequest;
 use App\Http\Repositories\TransactionRepository;
 
@@ -22,6 +21,7 @@ class TransactionController extends Controller
     /**
      * @OA\Get(
      *     path="/transactions",
+     *     summary="returns all the transaction from a specified timestamp",
      *     description="returns all the transaction from a specified timestamp",
      *     operationId="index",
      *     tags={"Transactions"},
@@ -71,6 +71,7 @@ class TransactionController extends Controller
     /**
      * @OA\Post(
      *     path="/transactions",
+     *     summary="This endpoint is called to create a new transaction.",
      *     description="This endpoint is called to create a new transaction.",
      *     operationId="store",
      *     tags={"Transactions"},
@@ -128,9 +129,9 @@ class TransactionController extends Controller
             $statusCode = Response::HTTP_NO_CONTENT;
         } else {
             $statusCode = Response::HTTP_CREATED;
-            Cache::put([$validated['timestamp'] => $validated['amount']], 60);
         }
 
+        $this->transactionRepository->addToQueue($validated);
         $this->transactionRepository->save($validated);
         return response()->json(null, $statusCode);
     }
@@ -138,6 +139,7 @@ class TransactionController extends Controller
     /**
      * @OA\Delete(
      *     path="/transactions",
+     *     summary="This endpoint causes all existing transactions to be deleted",
      *     description="This endpoint causes all existing transactions to be deleted",
      *     operationId="destroy",
      *     tags={"Transactions"},
