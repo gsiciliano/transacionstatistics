@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransactionRequest extends FormRequest
@@ -14,6 +15,12 @@ class TransactionRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function prepareForValidation(){
+        $this->merge(['timestamp'=>
+            $this->timestamp = Carbon::createFromTimeString($this->timestamp)->toDateTimeString()
+        ]);
     }
 
     /**
@@ -43,7 +50,7 @@ class TransactionRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric',
-            'timestamp' => 'required|date:Y-m-d\\TH:i:sO|before_or_equal:now'
+            'timestamp' => 'required|date:Y-m-d\\TH:i:s.v\\Z|before_or_equal:now'
         ];
     }
 }

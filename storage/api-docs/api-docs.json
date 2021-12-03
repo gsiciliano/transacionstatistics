@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080",
+            "url": "http://localhost:8081",
             "description": "API Server"
         }
     ],
@@ -30,6 +30,9 @@
                         "content": {
                             "application/json": {}
                         }
+                    },
+                    "204": {
+                        "description": "No content"
                     }
                 }
             }
@@ -171,7 +174,7 @@
                 "in": "header",
                 "flows": {
                     "clientCredentials": {
-                        "tokenUrl": "http://localhost:8080/oauth/token",
+                        "tokenUrl": "/oauth/token",
                         "scopes": {}
                     }
                 },

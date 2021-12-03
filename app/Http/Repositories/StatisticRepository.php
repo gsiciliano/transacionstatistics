@@ -9,11 +9,19 @@ use App\Http\Resources\StatisticResource;
 class StatisticRepository
 {
     public function all(){
-        $lastTransactionAmount = array_map(function($key){
-            return (float) Redis::hgetall($key)['amount'];
+        $transactionAmountList = array_map(function($item){
+            return (float) $item['amount'];
+        }, $this->allFromQueue());
+        return empty($transactionAmountList) ? null : StatisticResource::make($transactionAmountList);
+
+    }
+    public function allFromQueue(){
+        return array_map(function($key){
+            return array_merge(['key'=>$key], Redis::hgetall($key));
         }, Redis::keys('*'));
+    }
 
-        return StatisticResource::make($lastTransactionAmount);
-
+    public function removeFromQueue($key){
+        Redis::del($key);
     }
 }

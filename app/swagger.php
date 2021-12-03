@@ -26,7 +26,7 @@
  *     scheme={"http","https"},
  *     @OA\Flow(
  *         flow="clientCredentials",
- *         tokenUrl="http://localhost:8080/oauth/token",
+ *         tokenUrl="/oauth/token",
  *         scopes={}
  *     )
  *  )

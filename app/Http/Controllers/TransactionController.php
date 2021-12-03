@@ -65,7 +65,9 @@ class TransactionController extends Controller
         if (empty($fromTime)) {
             return response()->json(null,Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        return response()->json($this->transactionRepository->get($fromTime), Response::HTTP_OK);
+        return response()->json($this->transactionRepository->get(
+                                    Carbon::createFromTimeString($fromTime)->toDateTimeString()
+                                ), Response::HTTP_OK);
     }
 
     /**
@@ -125,14 +127,14 @@ class TransactionController extends Controller
         $validated = $request->validated();
         $dataTimeStamp = Carbon::parse($validated['timestamp']);
 
-        if ($dataTimeStamp->diffInSeconds() > 60) {
+        if ($dataTimeStamp->diffInSeconds() > config('time-limits.statistics.seconds')) {
+            $this->transactionRepository->save($validated);
             $statusCode = Response::HTTP_NO_CONTENT;
         } else {
+            $this->transactionRepository->addToQueue($validated);
             $statusCode = Response::HTTP_CREATED;
         }
 
-        $this->transactionRepository->addToQueue($validated);
-        $this->transactionRepository->save($validated);
         return response()->json(null, $statusCode);
     }
 

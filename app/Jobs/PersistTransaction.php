@@ -2,30 +2,17 @@
 
 namespace App\Jobs;
 
-use App\Http\Repositories\TransactionRepository;
-use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use App\Http\Repositories\StatisticRepository;
+use App\Http\Repositories\TransactionRepository;
 
 class PersistTransaction implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    private $transactionRepository;
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(TransactionRepository $transactionRepository)
-    {
-        $this->transactionRepository = $transactionRepository;
-    }
+    use Queueable, SerializesModels;
 
     /**
      * Execute the job.
@@ -34,7 +21,18 @@ class PersistTransaction implements ShouldQueue
      */
     public function handle()
     {
-        Log::debug('transaction created!');
+        $statisticRepository = new StatisticRepository();
+        $transactionList = $statisticRepository->allFromQueue();
 
+        array_walk($transactionList, function($item) use ($statisticRepository){
+            $dataTimeStamp = Carbon::parse($item['timestamp']);
+            var_dump($dataTimeStamp->diffInSeconds());
+            if ($dataTimeStamp->diffInSeconds() > config('time-limits.statistics.seconds')) {
+                $transactionRepository = new TransactionRepository();
+                if($transactionRepository->save(['amount'=>$item['amount'],'timestamp'=>$item['timestamp']])){
+                    $statisticRepository->removeFromQueue($item['key']);
+                }
+            }
+        });
     }
 }

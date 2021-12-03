@@ -28,11 +28,19 @@ class StatisticController extends Controller
      *         @OA\MediaType(
      *            mediaType="application/json",
      *          )
+     *     ),
+     *      @OA\Response(
+     *         response=204,
+     *         description="No content",
      *     )
      * )
      */
     public function index(){
-        return response()->json($this->statisticRepository->all(), Response::HTTP_OK);
+        $response = $this->statisticRepository->all();
+        if (empty($response)){
+            return response()->json(null, Response::HTTP_NO_CONTENT);
+        }
+        return response()->json($response, Response::HTTP_OK);
 
     }
 }
