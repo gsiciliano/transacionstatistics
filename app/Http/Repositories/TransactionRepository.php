@@ -18,6 +18,12 @@ class TransactionRepository
         return TransactionResource::collection($transactions);
     }
 
+    public function getAllFromQueue(){
+        return array_map(function($key){
+            return array_merge(['key'=>$key], Redis::hgetall($key));
+        }, Redis::keys('*'));
+    }
+
     public function save($data){
         return Transaction::create($data);
     }
@@ -26,7 +32,17 @@ class TransactionRepository
         return Redis::hmset(microtime(),$data);
     }
 
-    public function truncate(){
+    public function removeFromQueue($key){
+        Redis::del($key);
+    }
+
+    public function removeAllQueuedItems(){
+        $cachedItems = count(Redis::keys('*'));
+        Redis::flushdb();
+        return $cachedItems;
+    }
+
+    public function truncateTable(){
         return DB::table('transactions')->delete();
     }
 }

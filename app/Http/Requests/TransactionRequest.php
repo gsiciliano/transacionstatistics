@@ -3,7 +3,10 @@
 namespace App\Http\Requests;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
+use \Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TransactionRequest extends FormRequest
 {
@@ -18,9 +21,11 @@ class TransactionRequest extends FormRequest
     }
 
     public function prepareForValidation(){
-        $this->merge(['timestamp'=>
-            $this->timestamp = Carbon::createFromTimeString($this->timestamp)->toDateTimeString()
-        ]);
+        if ($this->isMethod('post')){
+            $this->merge(['timestamp'=>
+                $this->timestamp = Carbon::createFromTimeString($this->timestamp)->toDateTimeString()
+            ]);
+        }
     }
 
     /**
@@ -48,9 +53,30 @@ class TransactionRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'amount' => 'required|numeric',
-            'timestamp' => 'required|date:Y-m-d\\TH:i:s.v\\Z|before_or_equal:now'
-        ];
+        if ($this->isMethod('get')){
+            return [
+                'from' => ['required','date:Y-m-d\\TH:i:s.v\\Z']
+            ];
+        }
+
+        if ($this->isMethod('post')){
+            return [
+                'amount' => ['required','numeric','gt:0'],
+                'timestamp' => ['required','date:Y-m-d\\TH:i:s.v\\Z',
+                    function($attribute, $value, $fail) {
+                        if (Carbon::createFromTimeString($value)->greaterThan(Carbon::now())){
+                            $fail($attribute.' must be before or equal to now');
+                        }
+                    }
+                ]
+            ];
+        }
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json(null, JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 }

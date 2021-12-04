@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->float('amount',22,5);
-            $table->string('timestamp');
+            $table->timestampTz('timestamp',3);
             $table->timestamps();
         });
     }

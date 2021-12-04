@@ -40,9 +40,6 @@ class TransactionController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Operation successful",
-     *         @OA\MediaType(
-     *            mediaType="application/json",
-     *          )
      *     ),
      *     @OA\Response(
      *         response=401,
@@ -50,7 +47,7 @@ class TransactionController extends Controller
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="Unprocessable Entity",
+     *         description="from parameter is empty or invalid",
      *     )
      * )
      */
@@ -59,14 +56,11 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(TransactionRequest $request)
     {
-        $fromTime = $request->input('from');
-        if (empty($fromTime)) {
-            return response()->json(null,Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $validated = $request->validated();
         return response()->json($this->transactionRepository->get(
-                                    Carbon::createFromTimeString($fromTime)->toDateTimeString()
+                                    Carbon::createFromTimeString($validated['from'])->toDateTimeString()
                                 ), Response::HTTP_OK);
     }
 
@@ -88,20 +82,14 @@ class TransactionController extends Controller
      *      @OA\Response(
      *         response=201,
      *         description="Resource created",
-     *         @OA\MediaType(
-     *            mediaType="application/json",
-     *          )
      *     ),
      *      @OA\Response(
      *         response=204,
      *         description="Resource created but is older than 60 seconds",
-     *         @OA\MediaType(
-     *            mediaType="application/json",
-     *          )
      *     ),
      *     @OA\Response(
      *         response=400,
-     *         description="Bad request",
+     *         description="JSON is invalid",
      *     ),
      *     @OA\Response(
      *         response=401,
@@ -109,7 +97,7 @@ class TransactionController extends Controller
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="Unprocessable Entity",
+     *         description="Something is not parsable or timestamp is in the future",
      *     )
      * )
      */
@@ -149,14 +137,12 @@ class TransactionController extends Controller
     *     @OA\Response(
      *         response=200,
      *         description="Operation successful",
-     *         @OA\MediaType(
-     *            mediaType="application/json",
-     *          )
      *     ),
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
-     *     ),     * )
+     *     ),
+     * )
      */
     /**
      * Remove the specified resource from storage.
@@ -165,6 +151,9 @@ class TransactionController extends Controller
      */
     public function destroy()
     {
-        return response()->json(["deleted"=>$this->transactionRepository->truncate()],Response::HTTP_OK);
+        return response()->json(["deleted"=>
+                                        $this->transactionRepository->truncateTable() +
+                                        $this->transactionRepository->removeAllQueuedItems()
+                                ],Response::HTTP_OK);
     }
 }

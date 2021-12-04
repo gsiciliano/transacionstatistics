@@ -18,7 +18,7 @@ class TransactionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "amount" => $this->amount,
+            "amount" => (string) $this->amount,
             "timestamp" => Carbon::createFromTimeString($this->timestamp)->format('Y-m-d\TH:i:s.v\Z')
         ];
     }

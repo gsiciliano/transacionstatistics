@@ -17,8 +17,8 @@ class TransactionFactory extends Factory
     public function definition()
     {
         return [
-            'amount' => $this->faker->randomFloat(),
-            'timestamp' => Carbon::now()->format('Y-m-d\TH:i:s.v\Z')
+            'amount' => $this->faker->randomFloat(null,1),
+            'timestamp' => Carbon::now()->format('Y-m-d H:i:s.v')
         ];
     }
 }

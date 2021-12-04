@@ -60,16 +60,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Operation successful",
-                        "content": {
-                            "application/json": {}
-                        }
+                        "description": "Operation successful"
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
                     "422": {
-                        "description": "Unprocessable Entity"
+                        "description": "from parameter is empty or invalid"
                     }
                 },
                 "security": [
@@ -97,25 +94,19 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Resource created",
-                        "content": {
-                            "application/json": {}
-                        }
+                        "description": "Resource created"
                     },
                     "204": {
-                        "description": "Resource created but is older than 60 seconds",
-                        "content": {
-                            "application/json": {}
-                        }
+                        "description": "Resource created but is older than 60 seconds"
                     },
                     "400": {
-                        "description": "Bad request"
+                        "description": "JSON is invalid"
                     },
                     "401": {
                         "description": "Unauthorized"
                     },
                     "422": {
-                        "description": "Unprocessable Entity"
+                        "description": "Something is not parsable or timestamp is in the future"
                     }
                 },
                 "security": [
@@ -133,10 +124,7 @@
                 "operationId": "destroy",
                 "responses": {
                     "200": {
-                        "description": "Operation successful",
-                        "content": {
-                            "application/json": {}
-                        }
+                        "description": "Operation successful"
                     },
                     "401": {
                         "description": "Unauthorized"

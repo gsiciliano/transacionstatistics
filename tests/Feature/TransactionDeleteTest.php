@@ -12,7 +12,7 @@ class TransactionDeleteTest extends TestCase
      * @test
      * @return void
      */
-    public function delete_response_code_401()
+    public function test_delete_transactions_unauthorized_and_get_401()
     {
         $response = $this->deleteJson('/transactions');
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -22,11 +22,11 @@ class TransactionDeleteTest extends TestCase
      * @test
      * @return void
      */
-    public function delete_response_code_200()
+    public function test_delete_transactions_persistent_and_in_memory_and_get_200()
     {
         Transaction::factory()->count(10)->create();
         $response = $this->withoutMiddleware()->deleteJson('/transactions');
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertExactJson(["deleted"=>10]);
+        $response->assertExactJson(["deleted"=>11]);
     }
 }

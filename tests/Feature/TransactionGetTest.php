@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Transaction;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class TransactionGetTest extends TestCase
 {
@@ -15,7 +13,7 @@ class TransactionGetTest extends TestCase
      * @test
      * @return void
      */
-    public function get_response_code_401()
+    public function test_get_transactions_unauthorized_and_get_401()
     {
         $response = $this->getJson('/transactions');
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -25,7 +23,7 @@ class TransactionGetTest extends TestCase
      * @test
      * @return void
      */
-    public function get_response_code_422()
+    public function test_get_transactions_without_from_parameter_and_get_422()
     {
         $response = $this->withoutMiddleware()->getJson('/transactions');
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -35,13 +33,33 @@ class TransactionGetTest extends TestCase
      * @test
      * @return void
      */
-    public function get_response_code_200_with_some_data()
+    public function test_get_transactions_with_bad_from_parameter_and_get_422()
     {
-        Transaction::factory()->count(10)->create();
-        $response = $this->withoutMiddleware()->getJson('/transactions?from='.Carbon::now()->format('Y-m-dTH:i:s.vZ'));
+        $response = $this->withoutMiddleware()->getJson('/transactions?from=today');
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function test_get_transactions_from_persistence_and_get_200()
+    {
+        $now = Carbon::now();
+        Transaction::factory()->count(1)->create([
+            'amount'=>1000,
+            'timestamp' => $now->format('Y-m-dH:i:s.v')
+        ]);
+
+        $response = $this->withoutMiddleware()->getJson('/transactions?from='.$now->format('Y-m-d\TH:i:s.v\Z'));
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonCount(10);
+        $response->assertJsonCount(1);
+        $response->assertExactJson([ [
+            'amount' => "1000.0",
+            'timestamp' => $now->format('Y-m-d\TH:i:s.v\Z')
+        ] ]);
         $response->assertJsonStructure(['*' => ['amount','timestamp']]);
     }
+
 
 }

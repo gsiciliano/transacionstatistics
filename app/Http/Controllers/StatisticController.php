@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Repositories\StatisticRepository;
+use App\Http\Repositories\TransactionRepository;
 
 class StatisticController extends Controller
 {
 
     private $statisticRepository;
+    private $transactionRepository;
 
-    public function __construct(StatisticRepository $statisticRepository)
+    public function __construct(StatisticRepository $statisticRepository, TransactionRepository $transactionRepository)
     {
         $this->statisticRepository = $statisticRepository;
+        $this->transactionRepository = $transactionRepository;
     }
 
     /**
@@ -36,11 +38,8 @@ class StatisticController extends Controller
      * )
      */
     public function index(){
-        $response = $this->statisticRepository->all();
-        if (empty($response)){
-            return response()->json(null, Response::HTTP_NO_CONTENT);
-        }
+        $transactionsList = $this->transactionRepository->getAllFromQueue();
+        $response = $this->statisticRepository->all($transactionsList);
         return response()->json($response, Response::HTTP_OK);
-
     }
 }

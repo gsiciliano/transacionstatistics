@@ -14,17 +14,20 @@ class StatisticResource extends JsonResource
      */
     public function toArray($request)
     {
-        $count = count($this->resource);
-        $sum = array_sum($this->resource);
-        $avg = $sum/$count;
-        $max = max($this->resource);
-        $min = min($this->resource);
+        $count = !empty($this->resource) ? count($this->resource) : 0;
+        $sum = !empty($this->resource) ? array_sum($this->resource) : 0;
+        $avg = !empty($this->resource) ? $sum/$count : 0;
+        $max = !empty($this->resource) ? max($this->resource) : 0;
+        $min = !empty($this->resource) ? min($this->resource) : 0;
         return [
-            'sum' => round($sum,2, PHP_ROUND_HALF_UP),
-            'avg' => round($avg,2, PHP_ROUND_HALF_UP),
-            'max' => round($max,2, PHP_ROUND_HALF_UP),
-            'min' => round($min,2, PHP_ROUND_HALF_UP),
+            'sum' => $this->sanitize_amount($sum),
+            'avg' => $this->sanitize_amount($avg),
+            'max' => $this->sanitize_amount($max),
+            'min' => $this->sanitize_amount($min),
             'count' => $count
         ];
+    }
+    private function sanitize_amount($data){
+        return number_format(round($data,2, PHP_ROUND_HALF_UP), 2, '.', '');;
     }
 }

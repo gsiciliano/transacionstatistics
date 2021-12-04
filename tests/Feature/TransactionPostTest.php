@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 
 class TransactionPostTest extends TestCase
 {
-    public function post_response_code_401()
+    public function test_post_transactions_unauthorized_and_get_401()
     /**
      * @test
      * @return void
@@ -26,7 +26,7 @@ class TransactionPostTest extends TestCase
      * @test
      * @return void
      */
-    public function post_response_code_400()
+    public function test_post_transactions_with_no_json_formatted_input_and_get_400()
     {
         $payload = [
             'amount'=> '10000',
@@ -40,7 +40,7 @@ class TransactionPostTest extends TestCase
      * @test
      * @return void
      */
-    public function post_response_code_422_with_a_future_datetime()
+    public function test_post_transactions_with_a_future_date_and_get_422()
     {
         $payload = [
             'amount'=> '10000',
@@ -54,10 +54,23 @@ class TransactionPostTest extends TestCase
      * @test
      * @return void
      */
-    public function post_response_code_422_with_a_non_numeric_amount()
+    public function test_post_transactions_with_non_numeric_amount_and_get_422()
     {
         $payload = [
             'amount'=> 'thousand',
+            'timestamp' => Carbon::now()->toIso8601String()
+        ];
+        $response = $this->withoutMiddleware()->postJson('/transactions',$payload);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+    /**
+     * @test
+     * @return void
+     */
+    public function test_post_transactions_with_zero_amount_and_get_422()
+    {
+        $payload = [
+            'amount'=> '0',
             'timestamp' => Carbon::now()->toIso8601String()
         ];
         $response = $this->withoutMiddleware()->postJson('/transactions',$payload);
@@ -68,7 +81,7 @@ class TransactionPostTest extends TestCase
      * @test
      * @return void
      */
-    public function post_response_code_201_put_new_data()
+    public function test_post_transactions_in_memory_and_get_201()
     {
         $payload = [
             'amount'=> '10000',
@@ -82,7 +95,7 @@ class TransactionPostTest extends TestCase
      * @test
      * @return void
      */
-    public function post_response_code_204_put_new_data_older_than_60_sec()
+    public function test_post_transactions_older_than_60_second_that_persist_and_get_204()
     {
         $payload = [
             'amount'=> '10000',

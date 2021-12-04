@@ -21,16 +21,15 @@ class PersistTransaction implements ShouldQueue
      */
     public function handle()
     {
-        $statisticRepository = new StatisticRepository();
-        $transactionList = $statisticRepository->allFromQueue();
+        $transactionRepository = new TransactionRepository();
+        $transactionsList = $transactionRepository->getAllFromQueue();
 
-        array_walk($transactionList, function($item) use ($statisticRepository){
-            $dataTimeStamp = Carbon::parse($item['timestamp']);
-            var_dump($dataTimeStamp->diffInSeconds());
+        array_walk($transactionsList, function($transaction){
+            $dataTimeStamp = Carbon::parse($transaction['timestamp']);
             if ($dataTimeStamp->diffInSeconds() > config('time-limits.statistics.seconds')) {
                 $transactionRepository = new TransactionRepository();
-                if($transactionRepository->save(['amount'=>$item['amount'],'timestamp'=>$item['timestamp']])){
-                    $statisticRepository->removeFromQueue($item['key']);
+                if($transactionRepository->save(['amount'=>$transaction['amount'],'timestamp'=>$transaction['timestamp']])){
+                    $transactionRepository->removeFromQueue($transaction['key']);
                 }
             }
         });
