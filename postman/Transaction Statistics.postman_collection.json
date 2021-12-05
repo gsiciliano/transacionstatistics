@@ -1,0 +1,150 @@
+{
+    "info": {
+        "_postman_id": "3c8a3b23-54dd-4308-8df4-290a6b6df003",
+        "name": "Transaction Statistics",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Statistics",
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/statistics",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8081",
+                    "path": ["statistics"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "transactions",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8080/transactions?from=2021-11-27T18:10:25.354Z",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8081",
+                    "path": ["transactions"],
+                    "query": [
+                        {
+                            "key": "from",
+                            "value": "2021-11-27T18:10:25.354Z"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "transactions",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "accept",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\"amount\":\"0\",\n\"timestamp\":\"2021-12-04T19:54:25.354Z\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8080/transactions",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8081",
+                    "path": ["transactions"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "transactions",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/transactions",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8081",
+                    "path": ["transactions"]
+                }
+            },
+            "response": []
+        }
+    ],
+    "auth": {
+        "type": "oauth2",
+        "oauth2": [
+            {
+                "key": "clientSecret",
+                "value": "0Vw967ioyYp2zozSZS3cOaivSTycOJW0SNo9KfHP",
+                "type": "string"
+            },
+            {
+                "key": "clientId",
+                "value": "1",
+                "type": "string"
+            },
+            {
+                "key": "accessTokenUrl",
+                "value": "http://localhost:8080/oauth/token",
+                "type": "string"
+            },
+            {
+                "key": "grant_type",
+                "value": "client_credentials",
+                "type": "string"
+            },
+            {
+                "key": "tokenName",
+                "value": "Transaction OAuth2",
+                "type": "string"
+            },
+            {
+                "key": "addTokenTo",
+                "value": "header",
+                "type": "string"
+            }
+        ]
+    },
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ]
+}
