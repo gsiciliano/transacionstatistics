@@ -4,12 +4,12 @@
 
 A RESTful API for collecting statistics. The main use case for the API is to calculate realtime statistics for the last 60 seconds of transactions.
 
-| Endpoint                 | Authenticated | Description                                                                          |
-| ------------------------ | ------------- | ------------------------------------------------------------------------------------ |
-| **POST** /transactions   | yes           | called every time a transaction is made. It is also the sole input of this rest API. |
-| **GET** /transactions    | yes           | returns all the transaction from a specified timestamp                               |
-| **DELETE** /transactions | yes           | deletes all transactions                                                             |
-| **GET** /statistics      | no            | returns the statistic based of the transactions of the last 60 seconds.              |
+| Endpoint                 | Auth | Description                                                                          |
+| ------------------------ | ---- | ------------------------------------------------------------------------------------ |
+| **POST** /transactions   | yes  | called every time a transaction is made. It is also the sole input of this rest API. |
+| **GET** /transactions    | yes  | returns all the transaction from a specified timestamp                               |
+| **DELETE** /transactions | yes  | deletes all transactions                                                             |
+| **GET** /statistics      | no   | returns the statistic based of the transactions of the last 60 seconds.              |
 
 ## Requirements
 
@@ -55,11 +55,13 @@ in local environment configuration you can run test suite using following comman
   - `docker exec transaction_statistics_app composer test`
   - if you use make: `make test` can replace the command above
 
-### Production ready
+### Production readiness
 
 To deploy transactions statistics api in production you must change from `APP_ENV=local` to `APP_ENV=production` in your `.env` file before build containers images.
 
 This application runs on http protocol in local environment due to privacy problems with localhost ssl certificates on some browsers, to run in production add ssl certificates in `ssl` folder and edit `.env` file in order to change `BASE_URL` from http to https before build containers images.
+
+To follow best-practice for production enviroments consider use of CI/CD tool instead of running commands manually.  
 
 ## Test application on local environment
 
@@ -73,9 +75,9 @@ you can use following credentials for test api via swaggerdocs or postman collec
 
 `client_secret: 0Vw967ioyYp2zozSZS3cOaivSTycOJW0SNo9KfHP`
 
-### with [Postman](https://www.postman.com/) 
+### with [Postman](https://www.postman.com/)
 
-you can import this [postman collection](postman/Transaction%20Statistics.postman_collection.json) to try transactions statistics API 
+you can import this [postman collection](postman/Transaction%20Statistics.postman_collection.json) to try transactions statistics API.
 
 ## How it works
 
