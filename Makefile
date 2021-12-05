@@ -33,8 +33,10 @@ rebuild:                                ## Rebuild and turn on container service
 	$(COMPOSE_COMMAND) --file docker-compose.$(APP_ENV).yml up -d --build
 shell:                                  ## Enter application container shell
 	docker exec -it transaction_statistics_app bash
-init:                                  ## Enter application container shell
+init:                                  ## Run init script for first run
 	docker exec -it transaction_statistics_app sh init.sh
+test:                                  ## Run tests suite when in local environment
+	docker exec -it transaction_statistics_app composer test
 
 
 .DEFAULT_GOAL := help
