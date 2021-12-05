@@ -72,11 +72,4 @@ class TransactionRequest extends FormRequest
             ];
         }
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(
-            response()->json(null, JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
-        );
-    }
 }

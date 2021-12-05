@@ -39,6 +39,9 @@ class TransactionController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Operation successful",
+     *         @OA\MediaType(
+     *            mediaType="application/json",
+     *          )
      *     ),
      *     @OA\Response(
      *         response=401,
@@ -81,10 +84,16 @@ class TransactionController extends Controller
      *      @OA\Response(
      *         response=201,
      *         description="Resource created",
+     *         @OA\MediaType(
+     *            mediaType="application/json",
+     *          )
      *     ),
      *      @OA\Response(
      *         response=204,
      *         description="Resource created but is older than 60 seconds",
+     *         @OA\MediaType(
+     *            mediaType="application/json",
+     *          )
      *     ),
      *     @OA\Response(
      *         response=400,
@@ -135,6 +144,9 @@ class TransactionController extends Controller
     *     @OA\Response(
      *         response=200,
      *         description="Operation successful",
+     *         @OA\MediaType(
+     *            mediaType="application/json",
+     *          )
      *     ),
      *     @OA\Response(
      *         response=401,
