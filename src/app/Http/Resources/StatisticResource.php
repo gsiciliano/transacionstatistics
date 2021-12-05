@@ -20,14 +20,14 @@ class StatisticResource extends JsonResource
         $max = !empty($this->resource) ? max($this->resource) : 0;
         $min = !empty($this->resource) ? min($this->resource) : 0;
         return [
-            'sum' => $this->sanitize_amount($sum),
-            'avg' => $this->sanitize_amount($avg),
-            'max' => $this->sanitize_amount($max),
-            'min' => $this->sanitize_amount($min),
+            'sum' => $this->sanitize_float($sum),
+            'avg' => $this->sanitize_float($avg),
+            'max' => $this->sanitize_float($max),
+            'min' => $this->sanitize_float($min),
             'count' => $count
         ];
     }
-    private function sanitize_amount($data){
-        return number_format(round($data,2, PHP_ROUND_HALF_UP), 2, '.', '');;
+    private function sanitize_float($float){
+        return number_format(round($float,2, PHP_ROUND_HALF_UP), 2, '.', '');;
     }
 }
