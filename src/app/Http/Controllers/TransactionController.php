@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\TransactionRequest;
 use App\Http\Repositories\TransactionRepository;
@@ -60,8 +59,8 @@ class TransactionController extends Controller
     {
         $validated = $request->validated();
         return response()->json($this->transactionRepository->get(
-                                    Carbon::createFromTimeString($validated['from'])->toDateTimeString()
-                                ), Response::HTTP_OK);
+            Carbon::createFromTimeString($validated['from'])->toDateTimeString()
+        ), Response::HTTP_OK);
     }
 
     /**
@@ -122,7 +121,6 @@ class TransactionController extends Controller
             $this->transactionRepository->addToQueue($validated);
             $statusCode = Response::HTTP_CREATED;
         }
-
         return response()->json(null, $statusCode);
     }
 
@@ -151,9 +149,10 @@ class TransactionController extends Controller
      */
     public function destroy()
     {
-        return response()->json(["deleted"=>
-                                        $this->transactionRepository->truncateTable() +
-                                        $this->transactionRepository->removeAllQueuedItems()
-                                ],Response::HTTP_OK);
+        return response()->json(
+            ["deleted"=>
+                $this->transactionRepository->truncateTable() +
+                $this->transactionRepository->removeAllQueuedItems()
+            ],Response::HTTP_OK);
     }
 }

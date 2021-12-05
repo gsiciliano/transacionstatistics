@@ -2,9 +2,7 @@
 
 namespace App\Http\Repositories;
 
-use Illuminate\Support\Facades\Redis;
 use App\Http\Resources\StatisticResource;
-
 
 class StatisticRepository
 {
@@ -13,7 +11,6 @@ class StatisticRepository
             return (float) $item['amount'];
         }, $transactionsList);
         return StatisticResource::make($transactionAmountList);
-
     }
 
 }

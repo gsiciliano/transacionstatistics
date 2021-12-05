@@ -15,20 +15,20 @@ A RESTful API for collecting statistics. The main use case for the API is to cal
 
 In order to run this application you must install at least:
 
--   an internet connection in order to download docker images
--   [Git](https://git-scm.com/) installed on your machine 
--   [Docker engine](https://docs.docker.com/engine/install/)
--   [Docker compose](https://docs.docker.com/compose/install/)
--   [WSL](https://docs.microsoft.com/en-us/windows/wsl/setup/environment) (if you run under Windows)
+- an internet connection in order to download docker images
+- [Git](https://git-scm.com/) installed on your machine 
+- [Docker engine](https://docs.docker.com/engine/install/)
+- [Docker compose](https://docs.docker.com/compose/install/)
+- [WSL](https://docs.microsoft.com/en-us/windows/wsl/setup/environment) (if you run under Windows)
 
 ## Installation, setup and first run on a local environment
 
-First of all you must clone this repo: `git clone https://github.com/gsiciliano/transacionstatistics.git `
+First of all you must clone this repo: `git clone https://github.com/gsiciliano/transacionstatistics.git`
 
 ### Use following instructions to initialize your local environment
 
--   `cd transactionstatistics`
--   `cp .env.example .env` (optionally you can make change to .env file if needed)
+- `cd transactionstatistics`
+- `cp .env.example .env` (optionally you can make change to .env file if needed)
   
 - build:  
   - `docker-compose -f docker-compose.production.yml build`
@@ -36,12 +36,11 @@ First of all you must clone this repo: `git clone https://github.com/gsiciliano/
 - up:
   - `docker-compose -f docker-compose.production.yml up -d`
   - if you use make utility `make up` can replace the command above
-- init:   
+- init:
   - `docker exec -it transaction_statistics_app sh init.sh`
   - if you use make utility `make init` can replace the command above
   
-
-### Run application's containers 
+### Run application's containers
 
 use `docker-compose -f docker-compose.production.yml up -d` to start application's containers; if you use make utility `make up` can replace the command above
 
@@ -56,10 +55,11 @@ in local environment configuration you can run test suite using following comman
   - `docker exec transaction_statistics_app composer test`
   - if you use make: `make test` can replace the command above
 
-
 ### Production ready
 
-To deploy transactions statistics api in production you must change from `APP_ENV=local` to `APP_ENV=production` in your `.env` file before build containers images
+To deploy transactions statistics api in production you must change from `APP_ENV=local` to `APP_ENV=production` in your `.env` file before build containers images.
+
+This application runs on http protocol in local environment due to privacy problems with localhost ssl certificates on some browsers, to run in production add ssl certificates in `ssl` folder and edit `.env` file in order to change `BASE_URL` from http to https before build containers images.
 
 ## Test application on local environment
 
