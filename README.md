@@ -63,7 +63,9 @@ If you use make commands nothing else is required, just run command as describe 
 
 Note that this application runs on http protocol in local environment due to privacy problems with localhost ssl certificates on some browsers, to run in production add ssl certificates in `ssl` folder and edit `.env` file in order to change `BASE_URL` from http to https before build containers images.
 
-To follow best-practice for production enviroments consider use of CI/CD tool instead of running commands manually.  
+To follow best-practice for production enviroments consider use of CI/CD tool instead of running commands manually.
+
+All passwords stored in configuration files and seeder are intended for testing only, make sure to replace them in production environment for best data safety
 
 ## Test application on local environment
 
@@ -87,7 +89,7 @@ The Transactions statistic API is composed by following containers:
 
 - Ngingx proxy web server container
 - Php application container
-- Redis service container
+- Redis in memory db service container
 - Scheduler container
 - MariaDB database container
 
@@ -95,7 +97,7 @@ When a new transaction is posted (with `/transactions` `POST`), if timestamp is 
 
 You can monitor how many transactions are queued by navigating `/statistics` `GET` route.
 
-every time a transaction felt down from the time window, the system put into a persistent database storage and remove it from redis queue.
+every time a transaction felt down from the time window, the system put it into a persistent database storage and remove it from redis queue.
 
 With `/transactions` `GET` route you can query persistent transactions starting from a given timestamp.
 
