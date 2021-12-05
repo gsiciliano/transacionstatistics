@@ -73,7 +73,7 @@ class TransactionController extends Controller
      *     tags={"Transactions"},
      *     security={{"passport":{}}},
      *      @OA\RequestBody(
-     *          description="Amount",
+     *          description="Transaction",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(ref="#/components/schemas/transactionRequest")
