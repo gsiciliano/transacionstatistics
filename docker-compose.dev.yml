@@ -13,7 +13,7 @@ services:
       - "TZ=Europe/Rome"
     container_name: ${APP_NAME}_app
     volumes:
-      - ./:/var/www
+      - ./src:/var/www
     networks:
       - default
 
@@ -25,7 +25,7 @@ services:
     environment:
       - "TZ=Europe/Rome"
     volumes:
-      - ./:/var/www
+      - ./src:/var/www
     ports:
       - ${HTTP_FORWARD_PORT}:80
       - ${HTTPS_FORWARD_PORT}:443

@@ -3,7 +3,8 @@ services:
   app:
     build:
       context: ./
-      dockerfile: docker/test/app.dockerfile
+      dockerfile: docker/prod/app.dockerfile
+    restart: unless-stopped
     environment:
       - "TZ=Europe/Rome"
     container_name: ${APP_NAME}_app
@@ -14,10 +15,22 @@ services:
     depends_on:
       - database
 
+  scheduler:
+    build:
+      context: ./
+      dockerfile: docker/prod/scheduler.dockerfile
+    restart: unless-stopped
+    container_name: ${APP_NAME}_scheduler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - app
+
   web:
     build:
       context: ./
-      dockerfile: docker/test/web.dockerfile
+      dockerfile: docker/prod/web.dockerfile
+    restart: unless-stopped
     container_name: ${APP_NAME}_web
     environment:
       - "TZ=Europe/Rome"
@@ -33,6 +46,7 @@ services:
 
   database:
     image: mariadb
+    restart: unless-stopped
     container_name: ${APP_NAME}_db
     environment:
       - "TZ=Europe/Rome"
@@ -50,6 +64,7 @@ services:
   redis:
     image: "redis:3.2"
     command: "redis-server --appendonly yes"
+    restart: unless-stopped
     container_name: ${APP_NAME}_redis
     environment:
       - "TZ=Europe/Rome"
@@ -57,15 +72,6 @@ services:
       - "redis_data:/data"
     networks:
       - default
-
-  scheduler:
-    image: mcuadros/ofelia:latest
-    container_name: ${APP_NAME}_scheduler
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker/test/scheduler.conf:/etc/ofelia/config.ini
-    depends_on:
-      - app
 
 volumes:
   app:

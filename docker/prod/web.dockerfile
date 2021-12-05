@@ -1,6 +1,6 @@
 FROM nginx
 
-ADD ./docker/test/web.vhost.conf /etc/nginx/conf.d/default.conf
+ADD ./docker/prod/web.vhost.conf /etc/nginx/conf.d/default.conf
 
 ADD ./ssl/ssl.crt /etc/nginx/ssl.crt
 ADD ./ssl/ssl.key /etc/nginx/ssl.key

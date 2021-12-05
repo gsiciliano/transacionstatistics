@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "https://localhost:8080",
+            "url": "http://localhost:8080",
             "description": "API Server"
         }
     ],
@@ -83,7 +83,7 @@
                 "description": "This endpoint is called to create a new transaction.",
                 "operationId": "store",
                 "requestBody": {
-                    "description": "Amount",
+                    "description": "Transaction",
                     "content": {
                         "application/json": {
                             "schema": {
