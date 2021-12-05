@@ -27,13 +27,26 @@ First of all you must clone this repo: `git clone https://github.com/gsiciliano/
 
 ### Use following instructions to initialize your local environment
 
+-   `cd transactionstatistics`
 -   `cp .env.example .env` (optionally you can make change to .env file if needed)
--   `docker-compose -f docker-compose.prod.yml up -d --build`
--   `docker exec transaction_statistics_app sh init.sh`
+  
+_Note that if you've make utility installed can jump to **Make Utility** section below_
+
+- build:  `docker-compose -f docker-compose.production.yml build`
+- up:     `docker-compose -f docker-compose.production.yml up -d`
+- init:   `docker exec -it transaction_statistics_app sh init.sh`
 
 ### Run application's containers 
 
-use `docker-compose -f docker-compose.prod.yml up -d` to start application's containers
+use `docker-compose -f docker-compose.production.yml up -d` to start application's containers
+
+### Make utility
+
+You can use make commands to replace initialization command:
+
+- `make build`
+- `make up`
+- `make init`
 
 ### Run test suite (only for local environment)
 
@@ -58,6 +71,7 @@ navigate to <http://localhost:8080> for swagger docs
 you can use following credentials for test api via swaggerdocs or postman collection
 
 `client_id: 1`
+
 `client_secret: 0Vw967ioyYp2zozSZS3cOaivSTycOJW0SNo9KfHP`
 
 ### with [Postman](https://www.postman.com/) 

@@ -1,6 +1,6 @@
 .PHONY: *
 
-APP_ENV := dev
+include .env
 
 ifeq ($(OS),Windows_NT)
     COMPOSE_COMMAND := docker-compose
@@ -33,5 +33,8 @@ rebuild:                                ## Rebuild and turn on container service
 	$(COMPOSE_COMMAND) --file docker-compose.$(APP_ENV).yml up -d --build
 shell:                                  ## Enter application container shell
 	docker exec -it transaction_statistics_app bash
+init:                                  ## Enter application container shell
+	docker exec -it transaction_statistics_app sh init.sh
+
 
 .DEFAULT_GOAL := help
