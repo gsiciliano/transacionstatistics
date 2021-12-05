@@ -31,10 +31,10 @@ First of all you must clone this repo: `git clone https://github.com/gsiciliano/
 - `cp .env.example .env` (optionally you can make change to .env file if needed)
   
 - build:  
-  - `docker-compose -f docker-compose.production.yml build`
+  - `docker-compose -f docker-compose.local.yml build`
   - if you use make utility `make build` can replace the command above
 - up:
-  - `docker-compose -f docker-compose.production.yml up -d`
+  - `docker-compose -f docker-compose.local.yml up -d`
   - if you use make utility `make up` can replace the command above
 - init:
   - `docker exec -it transaction_statistics_app sh init.sh`
@@ -42,7 +42,7 @@ First of all you must clone this repo: `git clone https://github.com/gsiciliano/
   
 ### Run application's containers
 
-use `docker-compose -f docker-compose.production.yml up -d` to start application's containers; if you use make utility `make up` can replace the command above
+use `docker-compose -f docker-compose.local.yml up -d` to start application's containers; if you use make utility `make up` do the same job
 
 ### Run test suite (only for local environment)
 
@@ -59,7 +59,9 @@ in local environment configuration you can run test suite using following comman
 
 To deploy transactions statistics api in production you must change from `APP_ENV=local` to `APP_ENV=production` in your `.env` file before build containers images.
 
-This application runs on http protocol in local environment due to privacy problems with localhost ssl certificates on some browsers, to run in production add ssl certificates in `ssl` folder and edit `.env` file in order to change `BASE_URL` from http to https before build containers images.
+If you use make commands nothing else is required, just run command as describe above, but if you run docker-compose commands without make wrapper, you must change `local` to `production` in all commands.
+
+Note that this application runs on http protocol in local environment due to privacy problems with localhost ssl certificates on some browsers, to run in production add ssl certificates in `ssl` folder and edit `.env` file in order to change `BASE_URL` from http to https before build containers images.
 
 To follow best-practice for production enviroments consider use of CI/CD tool instead of running commands manually.  
 
