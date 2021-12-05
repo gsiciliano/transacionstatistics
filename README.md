@@ -30,23 +30,21 @@ First of all you must clone this repo: `git clone https://github.com/gsiciliano/
 -   `cd transactionstatistics`
 -   `cp .env.example .env` (optionally you can make change to .env file if needed)
   
-_Note that if you've make utility installed can jump to **Make Utility** section below_
-
-- build:  `docker-compose -f docker-compose.production.yml build`
-- up:     `docker-compose -f docker-compose.production.yml up -d`
-- init:   `docker exec -it transaction_statistics_app sh init.sh`
+- build:  
+  - `docker-compose -f docker-compose.production.yml build`
+  - if you use make utility `make build` can replace the command above
+- up:
+  - `docker-compose -f docker-compose.production.yml up -d`
+  - if you use make utility `make up` can replace the command above
+- init:   
+  - `docker exec -it transaction_statistics_app sh init.sh`
+  - if you use make utility `make init` can replace the command above
+  
 
 ### Run application's containers 
 
 use `docker-compose -f docker-compose.production.yml up -d` to start application's containers
-
-### Make utility
-
-You can use make commands to replace initialization command:
-
-- `make build`
-- `make up`
-- `make init`
+if you use make utility `make up` can replace the command above
 
 ### Run test suite (only for local environment)
 
@@ -57,14 +55,16 @@ in local environment configuration you can run test suite using following comman
 
 - for run tests with summary:
   - `docker exec transaction_statistics_app composer test`
+  - if you use make: `make test` can replace the command above
+
 
 ### Production ready
 
-To deploy transactions statistics api in production you must change from `APP_ENV=local` to `APP_ENV=production` in your `.env` file before run `init.sh` script
+To deploy transactions statistics api in production you must change from `APP_ENV=local` to `APP_ENV=production` in your `.env` file before build containers images
 
-## Test application
+## Test application on local environment
 
-### on local environment
+### with your browser
 
 navigate to <http://localhost:8080> for swagger docs
 
