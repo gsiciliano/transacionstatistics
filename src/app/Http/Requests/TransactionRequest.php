@@ -23,7 +23,7 @@ class TransactionRequest extends FormRequest
     public function prepareForValidation(){
         if ($this->isMethod('post')){
             $this->merge(['timestamp'=>
-                $this->timestamp = Carbon::createFromTimeString($this->timestamp)->toDateTimeString()
+                $this->timestamp = Carbon::createFromTimeString($this->timestamp)->format('Y-m-d H:i:s.v')
             ]);
         }
     }

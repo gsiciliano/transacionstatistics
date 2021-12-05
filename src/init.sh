@@ -2,7 +2,8 @@
 
 cd /var/www
 
-if [ $(cat .env|grep "APP_ENV") = "APP_ENV=local" ]; then
+if [ $(cat .env|grep "APP_ENV") = "APP_ENV=local" ] \
+|| [ $(cat .env|grep "APP_ENV") = "APP_ENV=dev" ]; then
     composer update
     php artisan key:generate
     php artisan migrate:fresh --seed
