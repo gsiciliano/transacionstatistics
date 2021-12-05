@@ -43,8 +43,7 @@ First of all you must clone this repo: `git clone https://github.com/gsiciliano/
 
 ### Run application's containers 
 
-use `docker-compose -f docker-compose.production.yml up -d` to start application's containers
-if you use make utility `make up` can replace the command above
+use `docker-compose -f docker-compose.production.yml up -d` to start application's containers; if you use make utility `make up` can replace the command above
 
 ### Run test suite (only for local environment)
 
