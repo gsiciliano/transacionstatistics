@@ -16,7 +16,8 @@ RUN mkdir -p /home/www-data/.composer \
 ADD ./src /var/www/
 ADD ./.env /var/www/.env
 
-RUN chown -R www-data:www-data /var/www \
+RUN mkdir -p /var/www/vendor \
+    && chown -R www-data:www-data /var/www \
     && chmod +x /var/www/init.sh \
     && chmod -R 777 /var/www/storage
 
