@@ -83,7 +83,7 @@ you can import this [postman collection](postman/Transaction%20Statistics.postma
 
 The Transactions statistic API is composed by following containers:
 
-- Ngingx web server container
+- Ngingx proxy web server container
 - Php application container
 - Redis service container
 - Scheduler container
