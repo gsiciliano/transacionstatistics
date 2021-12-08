@@ -24,9 +24,10 @@ class TransactionDeleteTest extends TestCase
      */
     public function test_delete_transactions_persistent_and_in_memory_and_get_200()
     {
-        Transaction::factory()->count(10)->create();
+        $numberOfTransactions = 10;
+        Transaction::factory()->count($numberOfTransactions)->create();
         $response = $this->withoutMiddleware()->deleteJson('/transactions');
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertExactJson(["deleted"=>11]);
+        $response->assertExactJson(["deleted"=>$numberOfTransactions]);
     }
 }

@@ -54,11 +54,11 @@ class TransactionGetTest extends TestCase
         $response = $this->withoutMiddleware()->getJson('/transactions?from='.$now->format('Y-m-d\TH:i:s.v\Z'));
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonCount(1);
+        $response->assertJsonStructure(['*' => ['amount','timestamp']]);
         $response->assertExactJson([ [
             'amount' => "1000.0",
             'timestamp' => $now->format('Y-m-d\TH:i:s.v\Z')
         ] ]);
-        $response->assertJsonStructure(['*' => ['amount','timestamp']]);
     }
 
 
