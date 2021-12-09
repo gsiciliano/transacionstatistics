@@ -72,4 +72,17 @@ class TransactionRequest extends FormRequest
             ];
         }
     }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @param \Illuminate\Contracts\Validation\Validator
+     * @return Illuminate\Http\JsonResponse
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json(null, JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
+    }
 }
