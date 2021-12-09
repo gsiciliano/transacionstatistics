@@ -72,7 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"amount\":\"0\",\n\"timestamp\":\"2021-12-04T19:54:25.354Z\"\n}"
+					"raw": "{\n\"amount\":\"1300\",\n\"timestamp\":\"2021-12-04T19:54:25.354Z\"\n}"
 				},
 				"url": {
 					"raw": "{{base_url}}/transactions",
