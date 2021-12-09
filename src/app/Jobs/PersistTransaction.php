@@ -4,10 +4,8 @@ namespace App\Jobs;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Http\Repositories\StatisticRepository;
 use App\Http\Repositories\TransactionRepository;
 
 class PersistTransaction implements ShouldQueue
