@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080",
+            "url": "http://localhost",
             "description": "API Server"
         }
     ],
@@ -60,7 +60,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Operation successful"
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -94,10 +97,16 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Resource created"
+                        "description": "Resource created",
+                        "content": {
+                            "application/json": {}
+                        }
                     },
                     "204": {
-                        "description": "Resource created but is older than 60 seconds"
+                        "description": "Resource created but is older than 60 seconds",
+                        "content": {
+                            "application/json": {}
+                        }
                     },
                     "400": {
                         "description": "JSON is invalid"
@@ -124,7 +133,10 @@
                 "operationId": "destroy",
                 "responses": {
                     "200": {
-                        "description": "Operation successful"
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"

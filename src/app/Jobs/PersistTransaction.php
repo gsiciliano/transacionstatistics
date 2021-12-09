@@ -28,7 +28,11 @@ class PersistTransaction implements ShouldQueue
             $dataTimeStamp = Carbon::parse($transaction['timestamp']);
             if ($dataTimeStamp->diffInSeconds() > config('time-limits.statistics.seconds')) {
                 $transactionRepository = new TransactionRepository();
-                if($transactionRepository->save(['amount'=>$transaction['amount'],'timestamp'=>$transaction['timestamp']])){
+                $transactionModel = [
+                    'amount'=>$transaction['amount'],
+                    'timestamp' => $dataTimeStamp->format('Y-m-d H:i:s.v')
+                ];
+                if($transactionRepository->save($transactionModel)){
                     $transactionRepository->removeFromQueue($transaction['key']);
                 }
             }
